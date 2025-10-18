@@ -1,0 +1,61 @@
+# QGIS Python Plugin
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.bak
+*.swp
+*.tmp
+*.orig
+*.db
+*.sqlite
+*.egg-info/
+*.qgis2
+*.qgs~
+*.qgz~
+*.qgs.bak
+*.qgz.bak
+*.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.env
+*.ipynb_checkpoints
+# Build artifacts
+build/
+dist/
+*.egg
+*.eggs
+*.manifest
+*.spec
+*.lock
+# Sphinx docs
+help/build/
+help/html/
+# Test outputs
+*.coverage
+.coverage
+htmlcov/
+# OS junk
+*.~*
+# Plugin upload
+plugin_upload.log
+# QGIS resource files
+resources.py
+# Ignore generated docs
+*.html
+*.pdf
+# Ignore test data
+/test/*.asc
+/test/*.aux.xml
+/test/*.keywords
+/test/*.lic
+/test/*.prj
+/test/*.qml
+# Ignore user config
+*.ini
+*.cfg
+# Ignore backup files
+*~
+# Ignore Markdown previews
+*.md.html
