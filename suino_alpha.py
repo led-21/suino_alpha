@@ -394,6 +394,7 @@ class SuinoAlpha:
             ])
             
             features.append(feature)
+
         
         # Add features to the layer
         provider.addFeatures(features)
