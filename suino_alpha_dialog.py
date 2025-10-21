@@ -26,7 +26,7 @@ import os
 from datetime import datetime
 
 from qgis.PyQt import uic
-from qgis.PyQt import QtWidgets
+from qgis.PyQt import QtWidgets, QtGui, QtCore
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 from qgis.gui import QgsMapToolEmitPoint
 from qgis.core import QgsMessageLog, Qgis
@@ -105,6 +105,20 @@ class SuinoAlphaDialog(QtWidgets.QDialog, FORM_CLASS):
         self.point_tool = None
         self.previous_map_tool = None
         self._auto_updating_total = False
+
+        # Carregar imagem ilustrativa do galpão, mantendo mensagem padrão caso o arquivo não exista.
+        self._galpoes_pixmap = None
+        image_path = os.path.join(os.path.dirname(__file__), "resources", "galpoes.jpg")
+        if os.path.exists(image_path):
+            pixmap = QtGui.QPixmap(image_path)
+            if not pixmap.isNull():
+                self._galpoes_pixmap = pixmap
+                self.label_galpoes_image.setText("")
+                self._update_galpoes_image()
+            else:
+                self.label_galpoes_image.setText("Não foi possível carregar a imagem ilustrativa.")
+        else:
+            self.label_galpoes_image.setText("Imagem ilustrativa não encontrada em resources/galpoes.jpg.")
         
         # Connect the browse button to select output file
         self.pushButton_browse.clicked.connect(self.select_output_file)
@@ -121,6 +135,27 @@ class SuinoAlphaDialog(QtWidgets.QDialog, FORM_CLASS):
         # Inicializar campos com valores coerentes
         self.update_total_animais()
         self.update_effluent_defaults()
+
+    def resizeEvent(self, event):
+        """Garante que a imagem ilustrativa mantenha a proporção ao redimensionar."""
+        super().resizeEvent(event)
+        self._update_galpoes_image()
+
+    def _update_galpoes_image(self):
+        """Atualiza o QLabel com a imagem redimensionada preservando a proporção."""
+        if not isinstance(getattr(self, "_galpoes_pixmap", None), QtGui.QPixmap):
+            return
+        if self._galpoes_pixmap.isNull():
+            return
+        target_size = self.label_galpoes_image.size()
+        if target_size.width() <= 0 or target_size.height() <= 0:
+            return
+        scaled = self._galpoes_pixmap.scaled(
+            target_size,
+            QtCore.Qt.KeepAspectRatio,
+            QtCore.Qt.SmoothTransformation
+        )
+        self.label_galpoes_image.setPixmap(scaled)
     
     def select_output_file(self):
         """Open file dialog to select output shapefile path."""
