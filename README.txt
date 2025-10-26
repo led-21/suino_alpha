@@ -1,3 +1,3 @@
 ## 📸 Screenshot
 
-![Plugin Screenshot](images/screen.jpg)
+![Plugin Screenshot](screen.jpg)
