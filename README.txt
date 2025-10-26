@@ -1,3 +1,3 @@
 ## 📸 Screenshot
 
-![Plugin Screenshot](screen.jpg)
+![SuinoAlpha Screenshot](images/screen.jpg)
